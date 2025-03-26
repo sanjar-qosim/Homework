@@ -8,7 +8,7 @@ import java.util.ListIterator;
 public class MyList <T extends Comparable> implements List <T> {
 
     private int size;
-    T [] array;
+    private T [] array;
 
     @Override
     public int size() {
@@ -17,21 +17,86 @@ public class MyList <T extends Comparable> implements List <T> {
 
     @Override
     public boolean isEmpty() {
-        return array.length == 0;
-    }
-
-    @Override
-    public boolean add(T t) {
-        array[size + 1] = t;
+        if (size > 0) {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public boolean remove(Object o) {
-        T [] newArray = new T[array.length - 1];
-        for (T tmp : array) {
-            if (newArray)
+    public boolean add(T t) {
+        if (size == array.length) {
+            T[] newArray = (T[]) new Object[array.length * 2];
+            for (int i = 0; i < array.length;i++) {
+                newArray[i] = array[i];
+            }
+            array = newArray;
         }
+        array[size++] = t;
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
+    public void add(int index, T element) {
+        if (index == 0 && index > size) {
+            throw new IndexOutOfBoundsException("Invalid index!");
+        }
+    }
+
+    @Override
+    public T set(int index, T element) {
+        if (index == 0 && index > size) {
+            throw new IndexOutOfBoundsException("Invalid index!");
+        }
+        T [] newArray = (T[]) new Object [size];
+        return null;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        T [] newArray = (T[]) new Object [array.length - 1];
+        for (int i = 0; i < array.length; i++) {
+            if (!array[0].equals(o)) {
+                newArray[i] = array[i];
+            }
+            return false;
+        }
+        array = newArray;
+        return true;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public T remove(int index) {
+        if (index == 0 && size < index) {
+            throw new IndexOutOfBoundsException("Invalid index!");
+        } else if (array == null) {
+            throw new NullPointerException("The array is not initialized yet!");
+        }
+        T removedElement = array[index];
+        T [] newArray = (T[]) new Object [array.length - 1];
+        for (int i = 0; i < array.length; i++) {
+            if (i != index) {
+                newArray[i] = array[i];
+            }
+        }
+        array = newArray;
+        size--;
+        return removedElement;
     }
 
     @Override
@@ -41,6 +106,16 @@ public class MyList <T extends Comparable> implements List <T> {
                 return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
         return false;
     }
 
@@ -55,53 +130,16 @@ public class MyList <T extends Comparable> implements List <T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
     public void clear() {
 
     }
 
     @Override
     public T get(int index) {
-        return null;
-    }
-
-    @Override
-    public T set(int index, T element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, T element) {
-
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
+        if (index == 0 && index > size) {
+            throw new IndexOutOfBoundsException("Invalid index!");
+        }
+        return array[index];
     }
 
     @Override
