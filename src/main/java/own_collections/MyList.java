@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class MyList <T extends Comparable> implements List <T> {
+public class MyList <T extends Comparable <T>> implements List <T> {
 
     private int size;
     private T [] array;
@@ -32,7 +32,24 @@ public class MyList <T extends Comparable> implements List <T> {
             }
             array = newArray;
         }
-        array[size++] = t;
+
+        int low = 0;
+        int high = size - 1;
+        while (low <= high) {
+            int middle = low + (high - low) / 2;
+            if (t.compareTo(array[middle]) < 0) {
+                high = middle - 1;
+            } else {
+                low = middle + 1;
+            }
+        }
+
+        for (int i = size; i > low; i--) {
+            array[i] = array[i - 1];
+        }
+
+        array[low] = t;
+        size++;
         return true;
     }
 
