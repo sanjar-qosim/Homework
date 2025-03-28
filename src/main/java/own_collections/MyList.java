@@ -1,14 +1,16 @@
 package own_collections;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyList <T extends Comparable <T>> implements List <T> {
 
     private int size;
     private T [] array;
+
+    public MyList(){
+        array = (T[]) new Comparable[10];
+        size = 0;
+    }
 
     @Override
     public int size() {
@@ -26,7 +28,7 @@ public class MyList <T extends Comparable <T>> implements List <T> {
     @Override
     public boolean add(T t) {
         if (size == array.length) {
-            T[] newArray = (T[]) new Object[array.length * 2];
+            T[] newArray = (T[]) new Object[array.length + 1];
             for (int i = 0; i < array.length;i++) {
                 newArray[i] = array[i];
             }
@@ -187,5 +189,18 @@ public class MyList <T extends Comparable <T>> implements List <T> {
     @Override
     public Iterator<T> iterator() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(array[i]);
+            if (i < size - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
