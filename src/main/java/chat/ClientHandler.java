@@ -24,8 +24,39 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public void sendMessage(String message) {
+        outMessage.println(message);
+        outMessage.flush();
+    }
+
+    public void closeConnection() {
+        server.removeClient(this);
+        clientCount--;
+        server.sendMessageToAllClients(String.valueOf(clientCount));
+    }
+
     @Override
     public void run() {
+        try {
+            while (true) {
+                server.sendMessageToAllClients("NEW CLIENT");
+                server.sendMessageToAllClients(clientCount + "");
+                break;
+            }
 
+            while (true) {
+                String clientMessage = inMessage.nextLine();
+                if (clientMessage.equals("END")) {
+                    break;
+                }
+                System.out.println(clientMessage);  // for us
+                server.sendMessageToAllClients(clientMessage);  // for clients
+            }
+
+//            Thread.sleep(100);
+
+        } catch (Exception e) {
+
+        }
     }
 }
