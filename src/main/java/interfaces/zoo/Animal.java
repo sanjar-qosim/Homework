@@ -1,5 +1,6 @@
 package interfaces.zoo;
 
-public interface Animal extends MoveAble {
+public interface Animal {
     void makeSound();
+    void move();
 }
