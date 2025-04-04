@@ -4,7 +4,7 @@ public class PaymentProcessor {
 
     ProcessPayment processPayment;
 
-    public void pay(ProcessPayment processPayment){
-        if ()
-    }
+//    public void pay(ProcessPayment processPayment){
+//        if ()
+//    }
 }
